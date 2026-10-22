@@ -1,0 +1,18 @@
+{
+  // すいどうやさん3.0：画面（静的ファイル）と受け口（Worker）を1つにまとめて Cloudflare に置く
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "suidouyasan",
+  "main": "worker/index.ts",
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "not_found_handling": "single-page-application", "run_worker_first": ["/auth/*", "/api/*"] },
+  "observability": { "enabled": true },
+  // データベース（現場・写真・図面の記録）
+  "d1_databases": [
+    { "binding": "DB", "database_name": "suidouyasan", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }
+  ],
+  // 写真・図面ファイルの置き場
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "suidouyasan-files" }],
+  "vars": { "APP_URL": "http://localhost:5173", "ENVIRONMENT": "development" }
+  // AI（Workers AI・AI Gateway 経由の Claude）は、本番の置き場所と利用料を決めてから足す
+}

@@ -1,0 +1,7 @@
+# 手元で動かすときの値。このファイルを .dev.vars に写して書き換える（.dev.vars は GitHub に上げない）
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+# ログインを許す Google アカウント（カンマ区切り）
+ALLOWED_EMAILS=
+# 手元の確認用。Google の設定が無くても、このアカウントとしてログインできる（本番では使われない）
+DEV_LOGIN_EMAIL=

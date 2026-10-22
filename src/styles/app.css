@@ -1,0 +1,170 @@
+/* すいどうやさん3.0 の見た目。ガラスの板（リキッドグラス）を、水の色の背景の上に重ねる。PC 優先 */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  --ink: #0f1c26;
+  --ink-2: #44566a;
+  --ink-3: #7a8a9a;
+  --bg: #e9f1f6;
+  --blob-1: #6fc7e8;
+  --blob-2: #4f8df0;
+  --blob-3: #8fe0c9;
+  --blob-4: #b8a6f5;
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-bg-strong: rgba(255, 255, 255, 0.62);
+  --glass-edge: rgba(255, 255, 255, 0.7);
+  --glass-hi: rgba(255, 255, 255, 0.9);
+  --glass-shadow: rgba(22, 52, 82, 0.16);
+  --accent: #0a84ff;
+  --accent-ink: #ffffff;
+  --ok: #1f9d55;
+  --warn: #c27a00;
+  --danger: #d92d20;
+  --sk-1: rgba(255, 255, 255, 0.35);
+  --sk-2: rgba(255, 255, 255, 0.8);
+  --radius: 22px;
+  --radius-sm: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eaf2f8;
+    --ink-2: #a9bccb;
+    --ink-3: #7c8f9f;
+    --bg: #071019;
+    --blob-1: #0e5a78;
+    --blob-2: #1d3f8f;
+    --blob-3: #0f6b57;
+    --blob-4: #4a3a8f;
+    --glass-bg: rgba(30, 42, 56, 0.42);
+    --glass-bg-strong: rgba(36, 50, 66, 0.66);
+    --glass-edge: rgba(255, 255, 255, 0.16);
+    --glass-hi: rgba(255, 255, 255, 0.28);
+    --glass-shadow: rgba(0, 0, 0, 0.45);
+    --accent: #3d9bff;
+    --sk-1: rgba(255, 255, 255, 0.05);
+    --sk-2: rgba(255, 255, 255, 0.16);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 背景：ゆっくり動く水の色の光 */
+.backdrop { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+.backdrop i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.75; animation: drift 26s ease-in-out infinite alternate; }
+.backdrop i:nth-child(1) { width: 52vw; height: 52vw; left: -10vw; top: -14vw; background: var(--blob-1); }
+.backdrop i:nth-child(2) { width: 44vw; height: 44vw; right: -12vw; top: 8vh; background: var(--blob-2); animation-duration: 32s; }
+.backdrop i:nth-child(3) { width: 40vw; height: 40vw; left: 22vw; bottom: -18vw; background: var(--blob-3); animation-duration: 38s; }
+.backdrop i:nth-child(4) { width: 30vw; height: 30vw; right: 14vw; bottom: -10vw; background: var(--blob-4); animation-duration: 29s; }
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4vw, 3vh, 0) scale(1.08); }
+  100% { transform: translate3d(-3vw, -2vh, 0) scale(0.96); }
+}
+
+/* ガラスの板 */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 rgba(255, 255, 255, 0.06), 0 12px 40px var(--glass-shadow);
+  isolation: isolate;
+}
+.glass::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(120% 80% at 10% 0%, rgba(255, 255, 255, 0.55), transparent 55%);
+  opacity: 0.55;
+}
+.glass.strong { background: var(--glass-bg-strong); }
+
+/* 画面の骨組み（PC 優先：左にメニュー、右に中身） */
+.shell { position: relative; z-index: 1; display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 20px; height: 100%; padding: 20px; }
+.side { display: flex; flex-direction: column; gap: 6px; padding: 18px 12px; }
+.brand { font-weight: 700; font-size: 17px; padding: 6px 12px 16px; letter-spacing: 0.01em; }
+.nav { position: relative; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; color: var(--ink-2); text-decoration: none; font-weight: 600; }
+.nav .pill { position: absolute; inset: 0; border-radius: 12px; background: var(--glass-bg-strong); box-shadow: inset 0 1px 0 var(--glass-hi), 0 4px 14px var(--glass-shadow); z-index: -1; }
+.nav.active { color: var(--ink); }
+.nav svg { width: 18px; height: 18px; flex: none; }
+.side .spacer { flex: 1; }
+.me { display: flex; align-items: center; gap: 10px; padding: 10px 12px; font-size: 13px; color: var(--ink-2); }
+.me img, .me .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--glass-bg-strong); flex: none; }
+.main { min-width: 0; overflow: auto; padding: 4px 4px 40px; }
+.head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 6px 18px; }
+.head h1 { font-size: 28px; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.sub { color: var(--ink-3); font-size: 13px; }
+
+/* ボタン */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; padding: 10px 18px; border-radius: 999px;
+  background: var(--accent); color: var(--accent-ink); font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 18px rgba(10, 132, 255, 0.35);
+}
+.btn.ghost { background: var(--glass-bg-strong); color: var(--ink); box-shadow: inset 0 1px 0 var(--glass-hi), 0 4px 14px var(--glass-shadow); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+/* カード */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.card { padding: 18px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; text-decoration: none; color: inherit; }
+.card h3 { margin: 0; font-size: 17px; }
+.tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--glass-bg-strong); color: var(--ink-2); }
+.tag.水道局 { color: #0a6fd6; } .tag.元請け { color: #7c4ddb; } .tag.民間 { color: #138a5a; }
+.stats { display: flex; gap: 14px; color: var(--ink-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.empty { padding: 48px 24px; text-align: center; color: var(--ink-2); }
+
+/* タブ */
+.tabs { display: inline-flex; gap: 4px; padding: 5px; border-radius: 999px; margin-bottom: 18px; }
+.tab { position: relative; border: 0; background: transparent; padding: 8px 20px; border-radius: 999px; cursor: pointer; font-weight: 600; color: var(--ink-2); z-index: 0; }
+.tab.on { color: var(--ink); }
+.tab .pill { position: absolute; inset: 0; border-radius: 999px; background: var(--glass-bg-strong); box-shadow: inset 0 1px 0 var(--glass-hi), 0 4px 14px var(--glass-shadow); z-index: -1; }
+
+/* 一覧 */
+.list { display: flex; flex-direction: column; }
+.row { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--glass-edge); }
+.row:last-child { border-bottom: 0; }
+.thumb { width: 56px; height: 42px; border-radius: 10px; object-fit: cover; background: var(--glass-bg-strong); }
+.badge { font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; }
+.badge.ok { background: rgba(31, 157, 85, 0.14); color: var(--ok); } .badge.wait { background: rgba(194, 122, 0, 0.14); color: var(--warn); }
+.drop { border: 1.5px dashed var(--glass-edge); border-radius: var(--radius); padding: 22px; text-align: center; color: var(--ink-2); cursor: pointer; }
+.drop.over { border-color: var(--accent); background: rgba(10, 132, 255, 0.08); }
+.panel { padding: 18px; }
+
+/* 入力 */
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--ink-2); }
+.field input, .field select { font: inherit; color: var(--ink); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--glass-edge); background: var(--glass-bg-strong); }
+.form { display: grid; gap: 14px; }
+.form .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+.error { color: var(--danger); font-size: 13px; }
+
+/* 重ねて出す窓 */
+.scrim { position: fixed; inset: 0; z-index: 20; background: rgba(4, 16, 28, 0.28); display: grid; place-items: center; padding: 20px; }
+.dialog { width: min(480px, 100%); padding: 24px; }
+.dialog h2 { margin: 0 0 14px; font-size: 20px; }
+
+/* ログイン */
+.login { position: relative; z-index: 1; height: 100%; display: grid; place-items: center; padding: 20px; }
+.login .box { width: min(400px, 100%); padding: 36px 32px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.login h1 { margin: 0; font-size: 26px; }
+.gbtn { display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--glass-edge); background: var(--glass-bg-strong); cursor: pointer; font-weight: 600; text-decoration: none; color: var(--ink); box-shadow: inset 0 1px 0 var(--glass-hi), 0 6px 18px var(--glass-shadow); }
+.gbtn svg { width: 18px; height: 18px; }
+
+/* スケルトン（読み込み中の形） */
+.sk { background: linear-gradient(100deg, var(--sk-1) 20%, var(--sk-2) 40%, var(--sk-1) 60%); background-size: 220% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 10px; }
+@keyframes shimmer { 0% { background-position: 120% 0; } 100% { background-position: -100% 0; } }
+.sk-line { height: 14px; } .sk-title { height: 30px; width: 240px; border-radius: 12px; }
+.sk-card { height: 132px; border-radius: var(--radius); }
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop i, .sk { animation: none; }
+}
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { flex-direction: row; overflow-x: auto; padding: 10px; }
+  .brand, .side .spacer, .me { display: none; }
+}
