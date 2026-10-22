@@ -7,6 +7,7 @@ import { Page, Shell } from "./components/Shell";
 import { Login } from "./pages/Login";
 import { Sites } from "./pages/Sites";
 import { SiteDetail } from "./pages/SiteDetail";
+import { Settings } from "./pages/Settings";
 
 function Backdrop() {
   return <div className="backdrop" aria-hidden="true"><i /><i /><i /><i /></div>;
@@ -32,6 +33,7 @@ function Routed({ me }: { me: Me }) {
           <Route path="/photos" element={<Soon title="写真" />} />
           <Route path="/drawings" element={<Soon title="図面" />} />
           <Route path="/estimates" element={<Soon title="見積" />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>

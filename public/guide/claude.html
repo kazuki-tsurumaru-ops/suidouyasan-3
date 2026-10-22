@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claudeとの接続方法</title>
+<style>
+  :root {
+    --ink: #0f1c26; --ink-2: #44566a; --line: #d6e0e8; --bg: #eef4f8; --card: #ffffff;
+    --accent: #0a84ff; --warn: #8a5c00; --warn-bg: #fff4d6;
+    --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #eaf2f8; --ink-2: #a9bccb; --line: #2a3a48; --bg: #0b141c; --card: #142029; --accent: #3d9bff; --warn: #f2c572; --warn-bg: #3a2e12; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.75; padding: 24px 16px 48px; }
+  .wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 14px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .meta { color: var(--ink-2); font-size: 14px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+  .step h2 { font-size: 19px; margin: 0 0 6px; display: flex; gap: 10px; align-items: baseline; }
+  .no { display: inline-grid; place-items: center; min-width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 16px; font-weight: 700; flex: none; }
+  ol, ul { margin: 6px 0 0; padding-left: 1.3em; }
+  li { margin: 4px 0; }
+  code { font-family: inherit; background: var(--bg); border: 1px solid var(--line); padding: 1px 8px; border-radius: 6px; word-break: break-all; }
+  .warn { background: var(--warn-bg); color: var(--warn); border-radius: 14px; padding: 14px 18px; }
+  .warn b { display: block; }
+  .small { font-size: 14px; color: var(--ink-2); }
+  @media print { body { background: #fff; padding: 0; font-size: 13.5px; } .step { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>Claudeとの接続方法</h1>
+    <div class="meta">すいどうやさん3.0 ・ 接続方法 v1（2026-10-22）・ パソコンでの作業がおすすめ（スマホでもできます）</div>
+  </div>
+
+  <div class="step">
+    <h2><span class="no">1</span>Claudeの管理画面に入る</h2>
+    <ol>
+      <li><code>https://platform.claude.com</code> を開く</li>
+      <li>「Googleで続ける」を押し、いつものGoogleアカウントで入る</li>
+      <li>初めてのときは、名前などを聞かれるので入れる</li>
+    </ol>
+    <p class="small">Claudeのアプリ（チャット）の有料プランとは別のものです。プランに入っていなくても使えます。</p>
+  </div>
+
+  <div class="step">
+    <h2><span class="no">2</span>使う分のお金を先に入れる</h2>
+    <ol>
+      <li>左のメニューの「Settings（設定）」→「Billing（支払い）」を開く</li>
+      <li>クレジットカードを登録し、最初は <b>10ドル（約1,500円）</b>だけ買う</li>
+      <li>「Auto reload（自動で追加購入）」は<b>オフのまま</b>にする</li>
+    </ol>
+    <p class="small">前払いなので、買った分より多くは使われません。すいどうやさんで使う分は、ひと月に数百円〜数千円の見込みです。足りなくなったら、同じ画面で買い足します。</p>
+  </div>
+
+  <div class="step">
+    <h2><span class="no">3</span>APIキーを作ってコピーする</h2>
+    <ol>
+      <li>「Settings（設定）」→「API Keys」を開く</li>
+      <li>「Create Key（キーを作る）」を押し、名前に <code>すいどうやさん</code> と入れて作る</li>
+      <li><code>sk-ant-</code> で始まる長い文字が出るので、<b>コピー</b>ボタンを押す</li>
+    </ol>
+    <p class="small">この文字は、作ったときに1回しか表示されません。コピーし忘れたら、もう一度キーを作れば大丈夫です。</p>
+  </div>
+
+  <div class="step">
+    <h2><span class="no">4</span>すいどうやさんに貼る</h2>
+    <ol>
+      <li>すいどうやさん3.0 に Google でログインする</li>
+      <li>左のメニューの「設定」→「Claudeと接続」を開く</li>
+      <li>コピーしたキーを貼り、「接続する」を押す</li>
+      <li>「接続済み（末尾 ○○○○）」と出たら終わり</li>
+    </ol>
+  </div>
+
+  <div class="warn">
+    <b>キーの扱いの注意</b>
+    <ul>
+      <li>キーは、お金を使える鍵です。LINE・メール・紙で人に渡さないでください</li>
+      <li>すいどうやさんの中では暗号にして保存し、画面には末尾4文字しか出しません</li>
+      <li>キーが漏れたかもと思ったら、手順3の画面でそのキーを消し（Delete）、新しいキーを作って貼り直してください</li>
+    </ul>
+  </div>
+
+  <p class="small">管理画面の言葉や並びは、Anthropic の都合で変わることがあります。見つからないときは、画面の左のメニューから「Billing」「API Keys」を探してください。</p>
+</div>
+</body>
+</html>

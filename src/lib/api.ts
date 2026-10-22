@@ -12,6 +12,7 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
 export type Me = { email: string; name: string | null; picture: string | null };
 export type Site = { id: string; name: string; kind: string; start_date: string | null; end_date: string | null; photo_count?: number; drawing_count?: number };
 export type Photo = { id: string; file_name: string | null; taken_at: string | null; status: string; part: string | null };
+export type ClaudeStatus = { connected: boolean; last4?: string; connected_at?: string; checked_at?: string | null };
 export type Drawing = { id: string; file_name: string; stage: string; uploaded_at: string };
 
 export const api = {
@@ -22,5 +23,10 @@ export const api = {
     call<{ id: string }>("/api/sites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }),
   uploadPhoto: (siteId: string, form: FormData) => call<{ id: string }>(`/api/sites/${siteId}/photos`, { method: "POST", body: form }),
   uploadDrawing: (siteId: string, form: FormData) => call<{ id: string }>(`/api/sites/${siteId}/drawings`, { method: "POST", body: form }),
+  claude: () => call<ClaudeStatus>("/api/settings/claude"),
+  connectClaude: (key: string) =>
+    call<ClaudeStatus>("/api/settings/claude", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ key }) }),
+  checkClaude: () => call<{ ok: boolean }>("/api/settings/claude/check", { method: "POST" }),
+  disconnectClaude: () => call<ClaudeStatus>("/api/settings/claude", { method: "DELETE" }),
   logout: () => call<{ ok: boolean }>("/auth/logout", { method: "POST" }),
 };

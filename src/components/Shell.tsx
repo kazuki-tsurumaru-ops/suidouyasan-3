@@ -9,6 +9,7 @@ const NAV = [
   { to: "/photos", label: "写真", icon: <><rect x="3" y="5" width="18" height="14" rx="3" /><circle cx="12" cy="12" r="3.5" /></> },
   { to: "/drawings", label: "図面", icon: <><path d="M4 4h12l4 4v12H4z" /><path d="M8 13h8M8 17h5" /></> },
   { to: "/estimates", label: "見積", icon: <><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9 8h6M9 12h6M9 16h3" /></> },
+  { to: "/settings", label: "設定", icon: <><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" /></> },
 ];
 
 export function Shell({ me, children }: { me: Me; children: ReactNode }) {

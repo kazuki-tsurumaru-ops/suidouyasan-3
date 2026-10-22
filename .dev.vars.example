@@ -5,3 +5,7 @@ GOOGLE_CLIENT_SECRET=
 ALLOWED_EMAILS=
 # 手元の確認用。Google の設定が無くても、このアカウントとしてログインできる（本番では使われない）
 DEV_LOGIN_EMAIL=
+# Claude の API キーを暗号化する鍵（32バイトを base64 にしたもの）。作り方：openssl rand -base64 32
+ENCRYPTION_KEY=
+# Cloudflare AI Gateway を通すとき（任意）：https://gateway.ai.cloudflare.com/v1/<アカウントID>/<ゲートウェイ名>/anthropic
+AI_GATEWAY_URL=

@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { auth, requireUser } from "./auth";
 import { sites } from "./routes/sites";
 import { files } from "./routes/files";
+import { settings } from "./routes/settings";
 import type { AppEnv } from "./types";
 
 const app = new Hono<AppEnv>();
@@ -16,6 +17,7 @@ app.get("/api/me", (c) => {
 });
 app.route("/api/sites", sites);
 app.route("/api", files);
+app.route("/api/settings", settings);
 
 app.onError((err, c) => {
   console.error(err);

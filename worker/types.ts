@@ -16,6 +16,8 @@ export type AppEnv = {
     GOOGLE_CLIENT_SECRET: string;
     ALLOWED_EMAILS: string;
     DEV_LOGIN_EMAIL?: string;
+    ENCRYPTION_KEY: string;
+    AI_GATEWAY_URL?: string;
   };
   Variables: { user: User };
 };

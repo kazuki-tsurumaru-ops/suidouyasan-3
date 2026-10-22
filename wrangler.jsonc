@@ -13,6 +13,6 @@
   ],
   // 写真・図面ファイルの置き場
   "r2_buckets": [{ "binding": "FILES", "bucket_name": "suidouyasan-files" }],
-  "vars": { "APP_URL": "http://localhost:5173", "ENVIRONMENT": "development" }
+  "vars": { "APP_URL": "http://127.0.0.1:5173", "ENVIRONMENT": "development" }
   // AI（Workers AI・AI Gateway 経由の Claude）は、本番の置き場所と利用料を決めてから足す
 }
